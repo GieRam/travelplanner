@@ -14,11 +14,11 @@ public class User {
 
     @NotNull
     @Size(max = 20)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String username;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotNull
