@@ -14,12 +14,15 @@ public class User {
 
     @NotNull
     @Size(max = 20)
+    @Column(nullable = false, length = 20)
     private String username;
 
     @NotNull
+    @Column(nullable = false)
     private String email;
 
     @NotNull
+    @Column(nullable = false)
     private String password;
 
     public User() {
