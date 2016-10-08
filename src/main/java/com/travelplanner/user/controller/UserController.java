@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserService service;
+    private UserService service;
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public User createUser(@RequestParam String username,
                            @RequestParam String email,
                            @RequestParam String password) {
