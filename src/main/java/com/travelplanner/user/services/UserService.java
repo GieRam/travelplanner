@@ -1,4 +1,4 @@
-package com.travelplanner.user.controller;
+package com.travelplanner.user.services;
 
 import com.travelplanner.user.entity.User;
 import com.travelplanner.user.repository.UserRepository;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class UserService {
+public class UserService {
 
     private UserRepository userRepository;
 
