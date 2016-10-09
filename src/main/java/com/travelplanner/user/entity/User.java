@@ -28,9 +28,6 @@ public class User {
     @Column
     private boolean enabled = true;
 
-    @Column
-    private boolean admin = false;
-
     public User() {
     }
 
@@ -72,8 +69,5 @@ public class User {
         this.enabled = enabled;
     }
 
-    public boolean isAdmin() {
-        return admin;
-    }
 }
 

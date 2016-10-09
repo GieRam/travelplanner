@@ -30,6 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
     @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder)
+                .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
+                .authoritiesByUsernameQuery("SELECT username, 'ADMIN' FROM users WHERE username=?");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .exceptionHandling()
@@ -41,30 +50,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .formLogin()
                     .loginProcessingUrl("/login")
+                    .permitAll()
                     .usernameParameter("username")
                     .passwordParameter("password")
-                    .permitAll()
-                    .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                     .successHandler(successHandler)
+                    .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                     .and()
                 .logout()
                     .invalidateHttpSession(true)
                     .permitAll();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder)
-                .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, 'ADMIN' FROM users WHERE admin=true AND username=?");
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
 }
